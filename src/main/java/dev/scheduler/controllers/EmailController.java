@@ -1,6 +1,6 @@
 package dev.scheduler.controllers;
 
-import dev.scheduler.classes.SingleReceiverRequest;
+import dev.scheduler.entities.auth.AuthUserEntity;
 import dev.scheduler.services.EmailService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,8 +14,8 @@ public class EmailController {
 
     EmailService emailService;
     @PostMapping(value = "/text")
-    public void sendTextEmail(@RequestBody SingleReceiverRequest request) {
-        emailService.sendTextEmail(request);
+    public void sendTextEmail(@RequestBody AuthUserEntity authUser) {
+        emailService.sendTextEmail(authUser);
     }
 
 }

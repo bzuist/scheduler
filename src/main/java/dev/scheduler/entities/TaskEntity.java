@@ -7,6 +7,7 @@ import org.springframework.cglib.core.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 public class TaskEntity {
-    public TaskEntity(Long id, String name, String text, LocalDate date, Boolean condition)
+    public TaskEntity(Long id, String name, String text, LocalDateTime date, Boolean condition)
     {
         this.id = id;
         this.name = name;
@@ -37,7 +38,7 @@ public class TaskEntity {
 
     private String text;
 
-    private LocalDate date;
+    private LocalDateTime date;
 
     private Boolean condition;
 

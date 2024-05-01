@@ -10,7 +10,6 @@ import dev.scheduler.entities.TaskEntity;
 import dev.scheduler.repos.AuthUserRepo;
 import dev.scheduler.repos.TaskRepo;
 import dev.scheduler.entities.auth.AuthUserEntity;
-import dev.scheduler.classes.SingleReceiverRequest;
 import dev.scheduler.services.EmailService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,25 +31,21 @@ public class ScheduledTask {
     private final TaskRepo repository;
     private EmailService emailService;
     private AuthUserEntity authUser;
-    private SingleReceiverRequest receiverRequest;
 
     private AuthUserRepo authUserRepo;
 
     @Scheduled(fixedRate = 5000)
-    public void checkAndSend() {
+    public void checkAndSend(AuthUserEntity authUser) {
 
-        Set<AuthUserEntity> allUsers = authUserRepo.findAll();
+        //todo jpql
+        List<TaskEntity> entities = repository.findAllByConditionAndUserID(false, authUser);
+        entities.forEach(taskEntity -> {
 
-        allUsers.forEach(user -> {
 
-            List<TaskEntity> entities = repository.findAllByConditionAndUserID(false, user);
+            if (LocalDate.now().isAfter(taskEntity.getDate().toLocalDate()) || LocalDate.now().isEqual(taskEntity.getDate().toLocalDate())) {
+                emailService.sendTextEmail(authUser);
+            }
 
-            entities.forEach(taskEntity -> {
-
-                if (LocalDate.now().isAfter(taskEntity.getDate()) || LocalDate.now().isEqual(taskEntity.getDate())) {
-                    emailService.sendTextEmail(user);
-                }
-            });
         });
     }
 

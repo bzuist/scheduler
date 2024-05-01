@@ -1,11 +1,14 @@
 package dev.scheduler;
 
+import dev.scheduler.entities.TaskEntity;
 import dev.scheduler.entities.auth.AuthUserEntity;
 import dev.scheduler.entities.auth.BaseRole;
 import dev.scheduler.entities.auth.RoleUserEntity;
 import dev.scheduler.repos.AuthUserRepo;
 import dev.scheduler.repos.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDate;
 import java.util.Collections;
 
 public class Initializer {
@@ -26,5 +29,7 @@ public class Initializer {
         );
         authUserRepo.save(user1);
 
+        TaskEntity test = new TaskEntity(1L, "test", "test", LocalDate.now(), false);
+        taskRepository.save(test);
 }
 }
