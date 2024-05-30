@@ -21,23 +21,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @Slf4j
 @RequiredArgsConstructor
 
 public class ScheduledTask {
 
-    private final TaskRepo repository;
+
+    private TaskRepo repository;
+
     private EmailService emailService;
     private AuthUserEntity authUser;
 
     private AuthUserRepo authUserRepo;
 
-    @Scheduled(fixedRate = 5000)
-    public void checkAndSend(AuthUserEntity authUser) {
+/*    @Scheduled(fixedRate = 5000)
+    public void checkAndSend() {
 
-        //todo jpql
         List<TaskEntity> entities = repository.findAllByConditionAndUserID(false, authUser);
         entities.forEach(taskEntity -> {
 
@@ -47,7 +49,7 @@ public class ScheduledTask {
             }
 
         });
-    }
+    }*/
 
 
 

@@ -1,21 +1,27 @@
 package dev.scheduler.controllers;
 
+import antlr.build.Tool;
 import dev.scheduler.entities.auth.AuthUserEntity;
+import dev.scheduler.repos.AuthUserRepo;
 import dev.scheduler.services.EmailService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/emails")
+@RequestMapping(value = "emails")
 
 public class EmailController {
 
-    EmailService emailService;
-    @PostMapping(value = "/text")
-    public void sendTextEmail(@RequestBody AuthUserEntity authUser) {
-        emailService.sendTextEmail(authUser);
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private AuthUserRepo authUserRepo;
+
+    @GetMapping(value = "/text/{userID}")
+    public void sendTextEmail(/*@RequestBody AuthUserEntity authUser*/ @PathVariable("userID") Long userID) {
+      emailService.sendTextEmail(authUserRepo.findById(userID).get());
+      System.out.println("Sent");
     }
 
 }

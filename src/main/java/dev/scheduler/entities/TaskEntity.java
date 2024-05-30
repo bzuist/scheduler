@@ -16,13 +16,15 @@ import java.util.List;
 @Getter
 @Setter
 public class TaskEntity {
-    public TaskEntity(Long id, String name, String text, LocalDateTime date, Boolean condition)
+    public TaskEntity(){}
+    public TaskEntity(Long id, String name, String text, LocalDateTime date, Boolean condition, AuthUserEntity userID)
     {
         this.id = id;
         this.name = name;
         this.text = text;
         this.date = date;
         this.condition = condition;
+        this.userID = userID;
     }
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -41,6 +43,5 @@ public class TaskEntity {
     private LocalDateTime date;
 
     private Boolean condition;
-
 
 }
